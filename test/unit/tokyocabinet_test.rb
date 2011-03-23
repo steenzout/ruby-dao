@@ -7,12 +7,17 @@ require 'lib/steenzout-dao'
 LOGGER = Logger.new('log/development.log') if !defined? LOGGER
 
 
-KEY_STRING1 = 'string1'
-KEY_STRING2 = 'string2'
-VALUE_STRING1 = 'value_string1'
-VALUE_STRING2 = 'value_string2'
 
 class TestTokyoCabinetDAO < Test::Unit::TestCase
+
+  KEY_STRING1 = 'string1'
+  KEY_STRING2 = 'string2'
+  KEY_UNKNOWN = 'UNKNOWN'
+
+  VALUE_STRING1 = 'value_string1'
+  VALUE_STRING2 = 'value_string2'
+
+
 
   def setup()
 
@@ -32,12 +37,10 @@ class TestTokyoCabinetDAO < Test::Unit::TestCase
   end
 
 
-### test methods
 
   def test_create_abstract()
 
     dao = Steenzout::DAO::TokyoCabinetDAO.new(:test_dao, {:kvstore => :adb, :location => 'test/abstract.tch'})
-
     assert(dao.database.instance_of? ADB)
 
   end
@@ -45,7 +48,6 @@ class TestTokyoCabinetDAO < Test::Unit::TestCase
   def test_create_btree()
 
     dao = Steenzout::DAO::TokyoCabinetDAO.new(:test_dao, {:kvstore => :bdb, :location => 'test/btree.tch'})
-
     assert(dao.database.instance_of? BDB)
 
   end
@@ -53,7 +55,6 @@ class TestTokyoCabinetDAO < Test::Unit::TestCase
   def test_create_hash()
 
     dao = Steenzout::DAO::TokyoCabinetDAO.new(:test_dao, {:kvstore => :hdb, :location => 'test/hash.tch'})
-
     assert(dao.database.instance_of? HDB)
 
   end
@@ -61,7 +62,6 @@ class TestTokyoCabinetDAO < Test::Unit::TestCase
   def test_create_fixed_length()
 
     dao = Steenzout::DAO::TokyoCabinetDAO.new(:test_dao, {:kvstore => :fdb, :location => 'test/fixed.tch'})
-
     assert(dao.database.instance_of? FDB)
 
   end
@@ -69,10 +69,10 @@ class TestTokyoCabinetDAO < Test::Unit::TestCase
   def test_create_table()
 
     dao = Steenzout::DAO::TokyoCabinetDAO.new(:test_dao, {:kvstore => :tdb, :location => 'test/abstract.tch'})
-
     assert(dao.database.instance_of? TDB)
 
   end
+
 
 
   def test_delete()
@@ -81,7 +81,6 @@ class TestTokyoCabinetDAO < Test::Unit::TestCase
     assert_nil @dao.get(KEY_STRING1)
 
   end
-
 
   def test_delete_unknown_key()
     assert_nil @dao.delete('UNKNOWN')
@@ -99,9 +98,8 @@ class TestTokyoCabinetDAO < Test::Unit::TestCase
 
   end
 
-
   def test_get_unknown_key()
-    assert_nil @dao.get('UNKNOWN')
+    assert_nil @dao.get(KEY_UNKNOWN)
   end
 
 
