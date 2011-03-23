@@ -1,0 +1,3 @@
+# format: [dow mon dd yyyy] [packager] [version]
+Tue Mar 22 2011 steenzout 0.1.0
+    - finished implementation of the TokyoCabinet generic implementation
